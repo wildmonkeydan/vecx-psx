@@ -1,4 +1,3 @@
-
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_gfxPrimitives.h"
@@ -195,10 +194,7 @@ void load_overlay(const char *filename){
 }
 
 int main(int argc, char *argv[]){
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0){
-		fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
-		exit(-1);
-	}
+	
 
 	resize(330*3/2, 410*3/2);
 
@@ -212,7 +208,6 @@ int main(int argc, char *argv[]){
 	e8910_init_sound();
 	osint_emuloop();
 	e8910_done_sound();
-	SDL_Quit();
 
 	return 0;
 }
