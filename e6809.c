@@ -10,7 +10,7 @@
  *    the lower bits with the unused upper bits all set to zero.
  */
 
-#define einline __inline
+#define einline
 
 enum {
 	FLAG_E		= 0x80,
@@ -1131,7 +1131,7 @@ unsigned e6809_sstep (unsigned irq_i, unsigned irq_f)
 		if (get_cc (FLAG_F) == 0) {
 			if (irq_status != IRQ_CWAI) {
 				set_cc (FLAG_E, 0);
-				inst_psh (0x81, &reg_s, reg_u, &cycles);
+				inst_psh(0x81, &reg_s, reg_u, &cycles);
 			}
 
 			set_cc (FLAG_I, 1);

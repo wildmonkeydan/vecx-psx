@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "SDL.h"
 
 #define SOUND_FREQ   22050
 #define SOUND_SAMPLE  1024
@@ -30,6 +29,7 @@ typedef int           INT32;
 typedef unsigned int  UINT32;
 typedef char          INT8;
 typedef unsigned char UINT8;
+typedef unsigned char Uint8;
 
 struct AY8910 {
 	int index;
@@ -496,8 +496,8 @@ void
 e8910_init_sound()
 {
 	// SDL audio stuff
-	SDL_AudioSpec reqSpec;
-	SDL_AudioSpec givenSpec;
+	//SDL_AudioSpec reqSpec;
+	//SDL_AudioSpec givenSpec;
 
 	PSG.Regs = snd_regs;
 	PSG.RNG  = 1;
@@ -509,13 +509,12 @@ e8910_init_sound()
 	PSG.ready = 1;
 
 	// set up audio buffering
-	reqSpec.freq = SOUND_FREQ;            // Audio frequency in samples per second
+	/*reqSpec.freq = SOUND_FREQ;            // Audio frequency in samples per second
 	reqSpec.format = AUDIO_U8;          // Audio data format
 	reqSpec.channels = 1;            // Number of channels: 1 mono, 2 stereo
 	reqSpec.samples = SOUND_SAMPLE;            // Audio buffer size in samples
 	reqSpec.callback = e8910_callback;      // Callback function for filling the audio buffer
 	reqSpec.userdata = NULL;
-	/* Open the audio device */
 	if ( SDL_OpenAudio(&reqSpec, &givenSpec) < 0 ){
 		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
 		exit(-1);
@@ -526,12 +525,12 @@ e8910_init_sound()
 # endif
 
 	// Start playing audio
-	SDL_PauseAudio(0);
+	SDL_PauseAudio(0);*/
 }
 
 void
 e8910_done_sound()
 {
-	SDL_CloseAudio();
+	//SDL_CloseAudio();
 }
 
