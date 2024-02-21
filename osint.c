@@ -4,6 +4,7 @@
 #include <psxapi.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "osint.h"
@@ -14,37 +15,44 @@
 #define CD_SECTOR_SIZE  2048
 #define BtoS(len) ( ( len + CD_SECTOR_SIZE - 1 ) / CD_SECTOR_SIZE )
 
+static unsigned char ramAddr[250000];
 
 static DRAWENV draw;
 static DISPENV disp;
 static uint8_t pad_buff[2][34];
 static uint8_t EMU_TIMER = 20; /* the emulators heart beats at 20 milliseconds */
-char	pribuff[2][65536];		/* Primitive packet buffers */
-uint32_t	ot[2][OT_LEN];			/* Ordering tables */
+char	pribuff[2][6536];		/* Primitive packet buffers */
+uint32_t	ot[2][4];			/* Ordering tables */
 char* nextpri;				/* Pointer to next packet buffer offset */
 int		db = 0;					/* Double buffer index */
 
 static long scl_factor;
 static long offx;
 static long offy;
+LINE_F2* line;
+
 
 void osint_render(void){
-	LINE_F2* line;
-
 	/* Clear ordering table and set start address of primitive */
 	/* buffer for next frame */
-	ClearOTagR(ot[db], OT_LEN);
+	ClearOTagR(ot[db], 8);
 	nextpri = pribuff[db];
 
+	line = (LINE_F2*)nextpri;
 	int v;
 	for(v = 0; v < vector_draw_cnt; v++){
-		line = (LINE_F2*)nextpri;
+		
 		uint8_t c = vectors_draw[v].color * 256 / VECTREX_COLORS;
 
+		setLineF2(line);
 		setRGB0(line, c, c, c);
 		setXY2(line, offx + vectors_draw[v].x0 / scl_factor, offy + vectors_draw[v].y0 / scl_factor, offx + vectors_draw[v].x1 / scl_factor, offy + vectors_draw[v].y1 / scl_factor);
+
+		addPrim(ot[db] + (8 - 1), line);
+		line++;
 	}
 
+	nextpri = (char*)line;
 }
 
 static char *romfilename = "\\ROM.DAT;1";
@@ -52,6 +60,9 @@ static char *cartfilename = NULL;
 
 static void init(){
 	CdInit();
+	EnterCriticalSection();
+	InitHeap(ramAddr, sizeof(ramAddr));
+	ExitCriticalSection();
 
 	CdlFILE file;
 	if (!CdSearchFile(&file, romfilename))
@@ -61,6 +72,9 @@ static void init(){
 		return;
 	}
 	CdControl(CdlSetloc, (unsigned char*)&file.pos, 0);
+
+	rom = (unsigned char*)malloc(2048 * ((file.size + 2047) / 2048));
+
 	CdRead((int)BtoS(file.size), (uint32_t*)rom, CdlModeSpeed);
 	CdReadSync(0, 0);
 
@@ -76,6 +90,9 @@ static void init(){
 			return;
 		}
 		CdControl(CdlSetloc, (unsigned char*)&cartFile.pos, 0);
+
+		cart = (unsigned char*)malloc(2048 * ((file.size + 2047) / 2048));
+
 		CdRead((int)BtoS(file.size), (uint32_t*)cart, CdlModeSpeed);
 		CdReadSync(0, 0);
 
@@ -195,6 +212,7 @@ static void readevents(){
 void osint_emuloop(){
 	vecx_reset();
 	for(;;){
+
 		vecx_emu((VECTREX_MHZ / 1000) * EMU_TIMER);
 		readevents();
 
@@ -205,7 +223,7 @@ void osint_emuloop(){
 		PutDrawEnv(&draw);
 
 		/* Begin drawing the new frame */
-		DrawOTag(ot[db] + (OT_LEN - 1));
+		DrawOTag(ot[db] + (8 - 1));
 
 		/* Alternate to the next buffer */
 		db = !db;

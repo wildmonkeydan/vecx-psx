@@ -41,5 +41,8 @@
     <ClInclude Include="vecx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="padEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

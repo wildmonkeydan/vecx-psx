@@ -64,19 +64,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <IncludePath>D:\psnoobsdk\include\libpsn00b;$(IncludePath)</IncludePath>
+    <IncludePath>C:\PSn00bSDK\include\libpsn00b;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <NMakePreprocessorDefinitions>_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <IncludePath>D:\psnoobsdk\include\libpsn00b;$(IncludePath)</IncludePath>
+    <IncludePath>C:\PSn00bSDK\include\libpsn00b;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <IncludePath>D:\psnoobsdk\include\libpsn00b;$(IncludePath)</IncludePath>
+    <IncludePath>C:\PSn00bSDK\include\libpsn00b;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <NMakePreprocessorDefinitions>NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <IncludePath>D:\psnoobsdk\include\libpsn00b;$(IncludePath)</IncludePath>
+    <IncludePath>C:\PSn00bSDK\include\libpsn00b;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
@@ -90,6 +90,7 @@
     <ClInclude Include="e6809.h" />
     <ClInclude Include="e8910.h" />
     <ClInclude Include="osint.h" />
+    <ClInclude Include="padEx.h" />
     <ClInclude Include="vecx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -19,8 +19,8 @@ typedef struct vector_type {
 	unsigned char color;
 } vector_t;
 
-extern unsigned char rom[8192];
-extern unsigned char cart[32768];
+extern unsigned char* rom;
+extern unsigned char* cart;
 
 extern unsigned snd_regs[16];
 extern unsigned alg_jch0;

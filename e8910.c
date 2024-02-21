@@ -473,20 +473,20 @@ e8910_callback(void *userdata, Uint8 *stream, int length)
 static void
 e8910_build_mixer_table()
 {
-	int i;
+	/*int i;
 	double out;
 
-	/* calculate the volume->voltage conversion table */
-	/* The AY-3-8910 has 16 levels, in a logarithmic scale (3dB per STEP) */
-	/* The YM2149 still has 16 levels for the tone generators, but 32 for */
-	/* the envelope generator (1.5dB per STEP). */
+	// calculate the volume->voltage conversion table 
+	// The AY-3-8910 has 16 levels, in a logarithmic scale (3dB per STEP) 
+	// The YM2149 still has 16 levels for the tone generators, but 32 for 
+	// the envelope generator (1.5dB per STEP). 
 	out = MAX_OUTPUT;
 	for (i = 31;i > 0;i--)
 	{
-		PSG.VolTable[i] = (unsigned)(out + 0.5);	/* round to nearest */
-		out /= 1.188502227;	/* = 10 ^ (1.5/20) = 1.5dB */
+		PSG.VolTable[i] = (unsigned)(out + 0.5);	// round to nearest
+		out /= 1.188502227;	// = 10 ^ (1.5/20) = 1.5dB 
 	}
-	PSG.VolTable[0] = 0;
+	PSG.VolTable[0] = 0;*/
 }
 
 

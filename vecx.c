@@ -6,8 +6,8 @@
 
 #define einline __inline
 
-unsigned char rom[8192];
-unsigned char cart[32768];
+unsigned char* rom;
+unsigned char* cart;
 static unsigned char ram[1024];
 
 /* the sound chip registers */
@@ -74,7 +74,7 @@ enum {
 	 * deleted vectors in a single table
 	 */
 
-	VECTOR_CNT		= VECTREX_MHZ / VECTREX_PDECAY,
+	VECTOR_CNT		= 500,
 
 	VECTOR_HASH     = 65521
 };
