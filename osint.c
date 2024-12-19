@@ -1,7 +1,4 @@
-#include "SDL.h"
-#include "SDL_image.h"
-#include "SDL_gfxPrimitives.h"
-#include "SDL_rotozoom.h"
+#include "RenderContext.h"
 
 #include "osint.h"
 #include "e8910.h"
@@ -9,9 +6,7 @@
 
 #define EMU_TIMER 20 /* the emulators heart beats at 20 milliseconds */
 
-static SDL_Surface *screen = NULL;
-static SDL_Surface *overlay_original = NULL;
-static SDL_Surface *overlay = NULL;
+static Graphics::RenderContext ctx;
 
 static long scl_factor;
 static long offx;
@@ -65,26 +60,7 @@ static void init(){
 }
 
 void resize(int width, int height){
-	long sclx, scly;
-
-	long screenx = width;
-	long screeny = height;
-	screen = SDL_SetVideoMode(screenx, screeny, 0, SDL_SWSURFACE | SDL_RESIZABLE);
-
-	sclx = ALG_MAX_X / screen->w;
-	scly = ALG_MAX_Y / screen->h;
-
-	scl_factor = sclx > scly ? sclx : scly;
-
-	offx = (screenx - ALG_MAX_X / scl_factor) / 2;
-	offy = (screeny - ALG_MAX_Y / scl_factor) / 2;
-
-	if(overlay_original){
-		if(overlay)
-			SDL_FreeSurface(overlay);
-		double overlay_scale = ((double)ALG_MAX_X / (double)scl_factor) / (double)overlay_original->w;
-		overlay = zoomSurface(overlay_original, overlay_scale, overlay_scale, 0);
-	}
+	ctx.setup(640, 480, 0, 0, 0, true);
 }
 
 static void readevents(){
@@ -193,15 +169,12 @@ void load_overlay(const char *filename){
 	}
 }
 
-int main(int argc, char *argv[]){
+int main(){
 	
 
 	resize(330*3/2, 410*3/2);
 
-	if(argc > 1)
-		cartfilename = argv[1];
-	if(argc > 2)
-		load_overlay(argv[2]);
+	cartfilename = "test.bin";
 
 	init();
 

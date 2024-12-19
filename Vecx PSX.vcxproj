@@ -83,13 +83,22 @@
   <ItemGroup>
     <ClCompile Include="e6809.c" />
     <ClCompile Include="e8910.c" />
+    <ClCompile Include="FileCD.cpp" />
+    <ClCompile Include="FileSerial.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="osint.c" />
+    <ClCompile Include="RenderContext.cpp" />
     <ClCompile Include="vecx.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="e6809.h" />
     <ClInclude Include="e8910.h" />
+    <ClInclude Include="File.h" />
+    <ClInclude Include="FileCD.h" />
+    <ClInclude Include="FileSerial.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="osint.h" />
+    <ClInclude Include="RenderContext.h" />
     <ClInclude Include="vecx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
